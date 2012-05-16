@@ -46,10 +46,19 @@ When /^I run the command use with the options (.+) and the parameters (.+)$/ do 
 end
 
 Then /^I should get a hash with (.+)$/ do |data|
+  list = []
   hash = {}
+  
   data.split(" ").each do |entity|
     hash[entity.split("=")[0]] = entity.split("=")[1]
   end
+  list << hash
+  list << {"id" => "0", "msg" => "ok"}
 
-  @result.should eq(hash)
+  @result.should eq(list)
+end
+
+Then /^I should get a hash$/ do
+  list = [{"id" => "0", "msg" => "ok"}]
+  @result.should eq(list)
 end

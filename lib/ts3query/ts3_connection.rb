@@ -10,7 +10,7 @@ class TS3Connection
   end
   
   def method_missing(meth, *args, &block)
-    result  = {}
+    result  = []
     options = ""
     params  = ""
     
@@ -28,11 +28,14 @@ class TS3Connection
     end
     
     @connection.cmd("String" => "#{meth}#{params}#{options}\r",
-                    "Match" => /error id=0 msg=ok\n/) { |data| 
+                    "Match" => /error id=0 msg=ok\n/) { |data|
+      current_data = {}
       data.split(" ").each do |entity|
-        result[entity.split("=")[0]] = entity.split("=")[1]
+        current_data[entity.split("=")[0]] = entity.split("=")[1]
       end
-      result.delete("error")              
+      current_data.delete("error")
+      
+      result << current_data
     }
     result
   end
