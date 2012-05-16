@@ -1,6 +1,34 @@
 = TS3Query
 
-Description goes here.
+== Install
+
+In <b>Rails 3</b>, add this to your Gemfile and run the +bundle+ command.
+
+  gem "ts3query"
+  
+== Getting Started
+
+=== Connecting to a Teamspeak 3 Server
+
+  @query = TS3Query.connect :address  => "your-address.com" # default => 127.0.0.1
+  							:port     => 1234               # default => 10011
+  							:username => "myqueryuser"      # default => serveradmin
+  							:password => "myquerypassword"
+
+This will raise an +ConnectionRefused+ error, if the server does not response or the data are wrong.
+
+=== Executing query commands
+
+This retuns a result hash with all server informations.
+  
+  result = @query.version()
+  
+This will return a hash with the serverlist. (Options -uid and -short)
+
+  result = @query.serverlist do |opt|
+  	opt.uid
+  	opt.short
+  end
 
 == Contributing to TS3Query
  
