@@ -31,7 +31,7 @@ class TS3Connection
                     "Match" => /error id=0 msg=ok\n/) { |data|
       data.split("|").each do |current|
         current_data = {}
-        data.split(" ").each do |entity|
+        current.split(" ").each do |entity|
           current_data[entity.split("=")[0]] = entity.split("=")[1]
         end
         current_data.delete("error")
