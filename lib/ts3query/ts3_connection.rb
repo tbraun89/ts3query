@@ -29,8 +29,8 @@ class TS3Connection
     
     @connection.cmd("String" => "#{meth}#{params}#{options}\r",
                     "Match" => /error id=0 msg=ok\n/) { |data|
-      current_data = {}
       data.split("|").each do |current|
+        current_data = {}
         data.split(" ").each do |entity|
           current_data[entity.split("=")[0]] = entity.split("=")[1]
         end
