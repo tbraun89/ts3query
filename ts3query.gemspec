@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = "0.1"
   s.author      = "TnT Web Solutions"
   s.email       = "support@tnt-web-solutions.de"
-  s.homepage    = "" #TODO
+  s.homepage    = "https://github.com/tntwebsolutions/ts3query"
   s.summary     = "Simple TS3 Query Library."
   s.description = "Simple TS3 Query Library to connect to the query port of a teamspeak 3 server."
   
