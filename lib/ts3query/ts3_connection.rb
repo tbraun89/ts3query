@@ -12,6 +12,7 @@ class TS3Connection
   def method_missing(meth, *args, &block)
     result  = {}
     options = ""
+    params  = ""
     
     if block
       query_options = QueryOptions.new
@@ -21,8 +22,12 @@ class TS3Connection
         options += " -#{opt}"
       end
     end
+
+    args.each do |param|
+      params += " #{param.keys[0]}=#{param[param.keys[0]]}"
+    end
     
-    @connection.cmd("String" => "#{meth}#{options}\r",
+    @connection.cmd("String" => "#{meth}#{params}#{options}\r",
                     "Match" => /error id=0 msg=ok\n/) { |data| 
       data.split(" ").each do |entity|
         result[entity.split("=")[0]] = entity.split("=")[1]

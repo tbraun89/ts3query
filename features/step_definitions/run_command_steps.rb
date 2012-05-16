@@ -4,6 +4,7 @@ end
 
 When /^I run the command version$/ do
   @result = @query.version()
+  @query.disconnect
 end
 
 When /^I run the command serverlist with the options (.+)$/ do |options|
@@ -14,6 +15,34 @@ When /^I run the command serverlist with the options (.+)$/ do |options|
       opt.send(current)
     end
   end
+  @query.disconnect
+end
+
+When /^I run the command use with the parameters (.+)$/ do |parameters|
+  parameters = parameters.split(" ")
+  params = {}
+  parameters.each do |current|
+    params[current.split("=")[0]] = current.split("=")[1]
+  end
+  @result = @query.use params
+  @query.disconnect
+end
+
+When /^I run the command use with the options (.+) and the parameters (.+)$/ do |options, parameters|
+  parameters = parameters.split(" ")
+  params = {}
+  parameters.each do |current|
+    params[current.split("=")[0]] = current.split("=")[1]
+  end
+  
+  options = options.split(" ")
+  @result = @query.use params do |opt|
+    options.each do |current|
+      current[0] = ""
+      opt.send(current)
+    end
+  end
+  @query.disconnect
 end
 
 Then /^I should get a hash with (.+)$/ do |data|

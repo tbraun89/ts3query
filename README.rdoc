@@ -30,6 +30,26 @@ This will return a hash with the serverlist. (Options -uid and -short)
   	opt.short
   end
 
+This will select the first server. (Parameters sid=1)
+
+  @query.use :sid => 1
+  
+You can also combine parameters and options.
+
+  @query.use :sid => 1 do |opt|
+  	opt.virtual
+  end
+
+=== Close the connection
+
+If you don't need the query connection any longer you should close it.
+
+  @query.disconnect
+  
+=== Query commands
+
+For a full command reference you can download the {Teamspeak 3 Query Manuel}[http://media.teamspeak.com/ts3_literature/TeamSpeak%203%20Server%20Query%20Manual.pdf].
+
 == Contributing to TS3Query
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
@@ -39,6 +59,15 @@ This will return a hash with the serverlist. (Options -uid and -short)
 * Commit and push until you are happy with your contribution.
 * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== Running the tests
+
+If you try to run the tests, you need a local teamspeak server running with this data:
+
+* Address:  127.0.0.1
+* Port:     10011
+* User:     serveradmin
+* Password: 0L8awVFD
 
 == Copyright
 
