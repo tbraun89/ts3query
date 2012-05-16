@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "ts3query"
-  s.version     = "0.2.1"
+  s.version     = "0.3"
   s.author      = "TnT Web Solutions"
   s.email       = "support@tnt-web-solutions.de"
   s.homepage    = "https://github.com/tntwebsolutions/ts3query"
