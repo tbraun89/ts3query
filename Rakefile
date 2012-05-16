@@ -15,11 +15,11 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "TS3Query"
-  gem.homepage = "http://github.com/tbraun89/TS3Query"
+  gem.homepage = "support@tnt-web-solutions.de"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "tbraun@stud.hs-heilbronn.de"
+  gem.summary = %Q{Simple TS3 Query Library.}
+  gem.description = %Q{Simple TS3 Query Library to connect to the query port of a teamspeak 3 server.}
+  gem.email = "tbraun@tnt-web-solutions.de"
   gem.authors = ["Torsten Braun"]
   # dependencies defined in Gemfile
 end

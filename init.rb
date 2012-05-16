@@ -1,1 +1,1 @@
-require 'TS3Query'
+require 'ts3query'
