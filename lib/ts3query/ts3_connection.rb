@@ -27,8 +27,9 @@ class TS3Connection
       params += " #{param.keys[0]}=#{param[param.keys[0]]}"
     end
     
-    @connection.cmd("String" => "#{meth}#{params}#{options}\r",
-                    "Match" => /error id=0 msg=ok\n/) { |data|
+    @connection.cmd("String"  => "#{meth}#{params}#{options}\r",
+                    "Match"   => /error id=0 msg=ok\n/,
+                    "Timeout" => 3) { |data|
       data.split("|").each do |current|
         current_data = {}
         current.split(" ").each do |entity|
@@ -51,7 +52,8 @@ class TS3Connection
   def connect(params) 
     begin
       @connection = Net::Telnet::new("Host" => params[:address], "Port" => params[:port])
-      @connection.waitfor(/TS3\n(.*)\n/)
+      @connection.waitfor("Match"   => /TS3\n(.*)\n/,
+                          "Timeout" => 3)
     rescue
       raise ConnectionRefused, "server not available"
     end

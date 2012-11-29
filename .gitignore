@@ -50,3 +50,6 @@ pkg
 
 # For Eclipse
 *.project
+
+# For Idea
+.idea
