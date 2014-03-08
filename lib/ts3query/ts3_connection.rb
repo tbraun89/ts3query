@@ -32,6 +32,7 @@ class TS3Connection
     @connection.cmd("String"  => "#{meth}#{params}#{options}\r",
                     "Match"   => /error id=0 msg=ok\n/,
                     "Timeout" => 3) { |data|
+      data.force_encoding 'UTF-8'
       data.split("|").each do |current|
         current_data = {}
         current.split(" ").each do |entity|
