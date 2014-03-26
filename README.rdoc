@@ -5,39 +5,44 @@
 In <b>Rails 3</b>, add this to your Gemfile and run the +bundle+ command.
 
   gem "ts3query"
-  
+
 == Getting Started
 
 === Connecting to a Teamspeak 3 Server
 
-  @query = TS3Query.connect :address  => "your-address.com" # default => 127.0.0.1
-                            :port     => 1234               # default => 10011
-                            :username => "myqueryuser"      # default => serveradmin
-                            :password => "myquerypassword"
+  @query = TS3Query.server_connect :address  => "your-address.com" # default => 127.0.0.1
+                                   :port     => 1234               # default => 10011
+                                   :username => "myqueryuser"      # default => serveradmin
+                                   :password => "myquerypassword"
 
-This will raise an +ConnectionRefused+ error, if the server does not response or the data are wrong.
+=== Connecting to a Teamspeak 3 Client (via ClientQuery plugin)
+
+  @query = TS3Query.client_connect :address  => "your-address.com" # default => 127.0.0.1
+                                   :port     => 1234               # default => 25639
+
+This will raise an +ConnectionRefused+ error, if the client does not respond or the credentials are wrong.
 
 === Executing query commands
 
 This retuns a result hash with all server informations.
-  
+
   result = @query.version()
-  
+
 This will return a hash with the serverlist. (Options -uid and -short)
 
   result = @query.serverlist do |opt|
-  	opt.uid
-  	opt.short
+    opt.uid
+    opt.short
   end
 
 This will select the first server. (Parameters sid=1)
 
   @query.use :sid => 1
-  
+
 You can also combine parameters and options.
 
   @query.use :sid => 1 do |opt|
-  	opt.virtual
+    opt.virtual
   end
 
 === Close the connection
@@ -45,13 +50,13 @@ You can also combine parameters and options.
 If you don't need the query connection any longer you should close it.
 
   @query.disconnect
-  
+
 === Query commands
 
 For a full command reference you can download the {Teamspeak 3 Query Manuel}[http://media.teamspeak.com/ts3_literature/TeamSpeak%203%20Server%20Query%20Manual.pdf].
 
 == Contributing to TS3Query
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
