@@ -33,23 +33,25 @@ module TS3Query
         end
       end
 
+      buffer = ""
       @connection.cmd("String"  => "#{meth}#{params}#{options}\r",
                       "Match"   => /error id=0 msg=ok\n/,
-                      "Timeout" => 3) { |data|
-        data.force_encoding 'UTF-8'
-        data.split("|").each do |current|
-          current_data = {}
-          current.split(" ").each do |entity|
-            key, value = entity.split "="
-            current_data[key] = value.is_a?(String) ? Escaping.decode(value) : nil
-          end
-          current_data.delete("error")
-          current_data.delete("id")
-          current_data.delete("msg")
+                      "Timeout" => 3) { |data| buffer += data }
 
-          result << current_data
+      buffer.force_encoding 'UTF-8'
+      buffer.split("|").each do |current|
+        current_data = {}
+        current.split(" ").each do |entity|
+          key, value = entity.split "="
+          current_data[key] = value.is_a?(String) ? Escaping.decode(value) : nil
         end
-      }
+        current_data.delete("error")
+        current_data.delete("id")
+        current_data.delete("msg")
+
+        result << current_data
+      end
+
       result << {"id" => "0", "msg" => "ok"}
       result.delete({})
       result
