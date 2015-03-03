@@ -73,9 +73,3 @@ If you try to run the tests, you need a local teamspeak server running with this
 * Port:     10011
 * User:     serveradmin
 * Password: 0L8awVFD
-
-== Copyright
-
-Copyright (c) 2012 TnT Web Solutions GbR. See LICENSE.txt for
-further details.
-

@@ -14,8 +14,8 @@ module TS3Query
 
     def method_missing(meth, *args, &block)
       result  = []
-      options = ""
-      params  = ""
+      options = ''
+      params  = ''
 
       if block
         query_options = QueryOptions.new
@@ -32,24 +32,29 @@ module TS3Query
         end
       end
 
-      @connection.cmd("String"  => "#{meth}#{params}#{options}\r",
-                      "Match"   => /error id=0 msg=ok\n/,
-                      "Timeout" => 3) { |data|
+      @connection.cmd('String'  => "#{meth}#{params}#{options}\r",
+                      'Match'   => /error id=0 msg=ok\n/,
+                      'Timeout' => 3) { |data|
+
         data.force_encoding 'UTF-8'
-        data.split("|").each do |current|
+
+        data.split('|').each do |current|
           current_data = {}
-          current.split(" ").each do |entity|
-            key, value = entity.split "="
+
+          current.split(' ').each do |entity|
+            key, value = entity.split '='
             current_data[key] = value
           end
-          current_data.delete("error")
-          current_data.delete("id")
-          current_data.delete("msg")
+
+          current_data.delete('error')
+          current_data.delete('id')
+          current_data.delete('msg')
 
           result << current_data
         end
       }
-      result << {"id" => "0", "msg" => "ok"}
+
+      result << {'id' => '0', 'msg' => 'ok'}
       result.delete({})
       result
     end

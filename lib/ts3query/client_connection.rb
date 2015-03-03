@@ -6,11 +6,11 @@ module TS3Query
 
     def connect(params)
       begin
-        @connection = Net::Telnet::new("Host" => params[:address], "Port" => params[:port])
-        @connection.waitfor("Match"   => /TS3 Client\n(.*)\n/,
-                            "Timeout" => 3)
+        @connection = Net::Telnet::new('Host' => params[:address], 'Port' => params[:port])
+        @connection.waitfor('Match'   => /TS3 Client\n(.*)\n/,
+                            'Timeout' => 3)
       rescue
-        raise ConnectionRefused, "client not available"
+        raise(ConnectionRefused, 'client not available')
       end
     end
   end
