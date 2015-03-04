@@ -1,6 +1,7 @@
 require 'net/telnet'
 require 'ts3query/errors'
 require 'ts3query/query_options'
+require 'ts3query/escaping'
 
 module TS3Query
   class TS3Connection
@@ -42,8 +43,8 @@ module TS3Query
           current_data = {}
 
           current.split(' ').each do |entity|
-            key, value = entity.split '='
-            current_data[key] = value
+            key, value        = entity.split '='
+            current_data[key] = value.is_a?(String) ? Escaping.decode(value) : nil
           end
 
           current_data.delete('error')
@@ -55,6 +56,7 @@ module TS3Query
       }
 
       result << {'id' => '0', 'msg' => 'ok'}
+
       result.delete({})
       result
     end
