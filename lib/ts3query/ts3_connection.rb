@@ -13,6 +13,9 @@ module TS3Query
       @connection.close
     end
 
+    # TODO add the escaping encoder
+    # TODO implement a buffer for whitehat101(0bb741020c1adc14678c7a28eee42619502b5db4)
+    # TODO check the fork from austinylin
     def method_missing(meth, *args, &block)
       result  = []
       options = ''

@@ -25,6 +25,5 @@ module TS3Query
     def self.decode(str)
       str.gsub(DECODER_REGEXP, DECODER_PATTERNS)
     end
-
   end
 end
