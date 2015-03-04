@@ -32,7 +32,7 @@ module TS3Query
 
       if args.first
         args.first.each do |key, value|
-          params += " #{key}=#{value}"
+          params += " #{key}=#{value.is_a?(String) ? Escaping.encode(value) : value}"
         end
       end
 
