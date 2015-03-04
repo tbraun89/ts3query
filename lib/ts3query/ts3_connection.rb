@@ -1,4 +1,5 @@
 require 'net/telnet'
+require 'stringio'
 require 'ts3query/errors'
 require 'ts3query/query_options'
 require 'ts3query/escaping'
@@ -13,10 +14,8 @@ module TS3Query
       @connection.close
     end
 
-    # TODO add the escaping encoder
-    # TODO implement a buffer for whitehat101(0bb741020c1adc14678c7a28eee42619502b5db4)
-    # TODO check the fork from austinylin
     def method_missing(meth, *args, &block)
+      buffer  = StringIO.new
       result  = []
       options = ''
       params  = ''
@@ -38,25 +37,27 @@ module TS3Query
 
       @connection.cmd('String'  => "#{meth}#{params}#{options}\r",
                       'Match'   => /error id=0 msg=ok\n/,
-                      'Timeout' => 3) { |data|
+                      'Timeout' => 3) do |data|
+        buffer << data
+      end
 
-        data.force_encoding 'UTF-8'
+      data = buffer.string
+      data.force_encoding 'UTF-8'
 
-        data.split('|').each do |current|
-          current_data = {}
+      data.split('|').each do |current|
+        current_data = {}
 
-          current.split(' ').each do |entity|
-            key, value        = entity.split '='
-            current_data[key] = value.is_a?(String) ? Escaping.decode(value) : nil
-          end
-
-          current_data.delete('error')
-          current_data.delete('id')
-          current_data.delete('msg')
-
-          result << current_data
+        current.split(' ').each do |entity|
+          key, value        = entity.split '='
+          current_data[key] = value.is_a?(String) ? Escaping.decode(value) : nil
         end
-      }
+
+        current_data.delete('error')
+        current_data.delete('id')
+        current_data.delete('msg')
+
+        result << current_data
+      end
 
       result << {'id' => '0', 'msg' => 'ok'}
 
